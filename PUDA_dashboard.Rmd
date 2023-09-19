@@ -9,6 +9,7 @@ output:
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(ggplot2)
+library(plotly)
 library(dplyr)
 library(shiny)
 
@@ -16,9 +17,8 @@ load("clustersData.RData")
 ```
 
 
-#Distribución Económica
-
-
+Distribución Económica
+=======================================================================
 Sidebar {.sidebar}
 -----------------------------------------------------------------------
 
@@ -26,6 +26,8 @@ Sidebar {.sidebar}
 selectInput(inputId = "modulo_",
             label =  "Modulo",
             choices = unique(mEcon$modulo),
+            #choices = c("Laundry","BodyWashing","Toilet Use","Hand Washing",
+            #            "Brushing Teeth","Dishwashing"),
             selected = "Laundry")
 
 ```
@@ -35,30 +37,58 @@ Column {data-width=450}
 
 ```{r}
 ##preparamos los datos
-m1_economic_contribucion<-mEcon %>% filter(modulo==input$modulo_) %>% group_by(cluster,`V9. PAGO_AGUA`) %>% summarise(Freq=n())
 
-m1_economic_ingreso<-mEcon %>% filter(modulo==input$modulo_) %>% group_by(cluster,ClaseSocial) %>% summarise(Freq=n())
+m_economic_contribucion_r <- reactive({mEcon %>% filter(modulo==input$modulo_) %>% group_by(cluster,`V9. PAGO_AGUA`) %>% summarise(Freq=n())})
+
+
+m_economic_ingreso_r <- reactive({mEcon %>% filter(modulo==input$modulo_) %>% group_by(cluster,ClaseSocial) %>% summarise(Freq=n())})
+
 
 ```
 
 ### Cluster 1: Contribución al pago del agua
 
 ```{r}
-m1_economic_contribucion %>%
-  filter(cluster==1) %>%
-  ggplot(aes(x=`V9. PAGO_AGUA`,y=Freq))+
-  geom_bar(stat='identity',fill="#7AC5CD")+
-  labs(x = " ")
+
+renderPlotly({
+  
+  m_economic_contribucion<-m_economic_contribucion_r()
+  
+  ggplotly(
+    
+    m_economic_contribucion %>%
+    filter(cluster==1) %>%
+    ggplot(aes(x=`V9. PAGO_AGUA`,y=Freq))+
+    geom_bar(stat='identity',fill="#7AC5CD")+
+    labs(x = " ")
+    
+  )
+  
+})
 ```
 
 ### Cluster 1: Clase social por ingreso del hogar
 
 ```{r}
-m1_economic_ingreso %>%
-  filter(cluster==1) %>%
-  ggplot(aes(x=ClaseSocial,y=Freq))+
-  geom_bar(stat='identity',fill="#7AC5CD")+
-  labs(x = " ")
+
+renderPlotly({
+  
+  #m_economic_ingreso<-m_economic_ingreso_r()
+  
+  ggplotly(
+    
+    m_economic_ingreso_r() %>%
+      filter(cluster==1) %>%
+      ggplot(aes(x=ClaseSocial,y=Freq))+
+      geom_bar(stat='identity',fill="#7AC5CD")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+
 
 ```
 
@@ -69,11 +99,22 @@ Column {data-width=450}
 
 ```{r}
 
-m1_economic_contribucion %>%
-  filter(cluster==2) %>%
-  ggplot(aes(x=`V9. PAGO_AGUA`,y=Freq)) +
-  geom_bar(stat='identity',fill="#A2CD5A")+
-  labs(x = " ")
+renderPlotly({
+  
+  m_economic_contribucion<-m_economic_contribucion_r()
+  
+  ggplotly(
+    
+    m_economic_contribucion %>%
+    filter(cluster==2) %>%
+    ggplot(aes(x=`V9. PAGO_AGUA`,y=Freq))+
+    geom_bar(stat='identity',fill="#A2CD5A")+
+    labs(x = " ")
+    
+  )
+  
+})
+
 
 ```
 
@@ -82,11 +123,22 @@ m1_economic_contribucion %>%
 
 ```{r}
 
-m1_economic_ingreso %>%
-  filter(cluster==2) %>%
-  ggplot(aes(x=ClaseSocial,y=Freq))+
-  geom_bar(stat='identity',fill="#A2CD5A")+
-  labs(x = " ")
+renderPlotly({
+  
+  #m_economic_ingreso<-m_economic_ingreso_r()
+  
+  ggplotly(
+    
+    m_economic_ingreso_r() %>%
+      filter(cluster==2) %>%
+      ggplot(aes(x=ClaseSocial,y=Freq))+
+      geom_bar(stat='identity',fill="#A2CD5A")+
+      labs(x = " ")
+    
+  )
+  
+})
+
 
 ```
 
@@ -96,11 +148,23 @@ Column {data-width=450}
 ### Cluster 3: Contribución al pago del agua
 
 ```{r}
-m1_economic_contribucion %>%
-  filter(cluster==3) %>%
-  ggplot(aes(x=`V9. PAGO_AGUA`,y=Freq)) +
-  geom_bar(stat='identity',fill="#EE6363")+
-  labs(x = " ")
+
+renderPlotly({
+  
+  m_economic_contribucion<-m_economic_contribucion_r()
+  
+  ggplotly(
+    
+    m_economic_contribucion %>%
+    filter(cluster==3) %>%
+    ggplot(aes(x=`V9. PAGO_AGUA`,y=Freq))+
+    geom_bar(stat='identity',fill="#EE6363")+
+    labs(x = " ")
+    
+  )
+  
+})
+
 
 ```
 
@@ -108,10 +172,22 @@ m1_economic_contribucion %>%
 
 ```{r}
 
-m1_economic_ingreso %>%
-  filter(cluster==3) %>%
-  ggplot(aes(x=ClaseSocial,y=Freq))+
-  geom_bar(stat='identity',fill="#EE6363")+
-  labs(x = " ")
+renderPlotly({
+  
+  #m_economic_ingreso<-m_economic_ingreso_r()
+  
+  ggplotly(
+    
+    m_economic_ingreso_r() %>%
+      filter(cluster==3) %>%
+      ggplot(aes(x=ClaseSocial,y=Freq))+
+      geom_bar(stat='identity',fill="#EE6363")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
 
 ```

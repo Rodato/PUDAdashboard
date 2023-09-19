@@ -1,0 +1,117 @@
+---
+title: "PUDA2022: Discovering clustering patterns"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(ggplot2)
+library(dplyr)
+library(shiny)
+
+load("clustersData.RData")
+```
+
+
+#Distribución Económica
+
+
+Sidebar {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+selectInput(inputId = "modulo_",
+            label =  "Modulo",
+            choices = unique(mEcon$modulo),
+            selected = "Laundry")
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+```{r}
+##preparamos los datos
+m1_economic_contribucion<-mEcon %>% filter(modulo==input$modulo_) %>% group_by(cluster,`V9. PAGO_AGUA`) %>% summarise(Freq=n())
+
+m1_economic_ingreso<-mEcon %>% filter(modulo==input$modulo_) %>% group_by(cluster,ClaseSocial) %>% summarise(Freq=n())
+
+```
+
+### Cluster 1: Contribución al pago del agua
+
+```{r}
+m1_economic_contribucion %>%
+  filter(cluster==1) %>%
+  ggplot(aes(x=`V9. PAGO_AGUA`,y=Freq))+
+  geom_bar(stat='identity',fill="#7AC5CD")+
+  labs(x = " ")
+```
+
+### Cluster 1: Clase social por ingreso del hogar
+
+```{r}
+m1_economic_ingreso %>%
+  filter(cluster==1) %>%
+  ggplot(aes(x=ClaseSocial,y=Freq))+
+  geom_bar(stat='identity',fill="#7AC5CD")+
+  labs(x = " ")
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Cluster 2: Contribución al pago del agua
+
+```{r}
+
+m1_economic_contribucion %>%
+  filter(cluster==2) %>%
+  ggplot(aes(x=`V9. PAGO_AGUA`,y=Freq)) +
+  geom_bar(stat='identity',fill="#A2CD5A")+
+  labs(x = " ")
+
+```
+
+
+### Cluster 2: Clase social por ingreso del hogar
+
+```{r}
+
+m1_economic_ingreso %>%
+  filter(cluster==2) %>%
+  ggplot(aes(x=ClaseSocial,y=Freq))+
+  geom_bar(stat='identity',fill="#A2CD5A")+
+  labs(x = " ")
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Cluster 3: Contribución al pago del agua
+
+```{r}
+m1_economic_contribucion %>%
+  filter(cluster==3) %>%
+  ggplot(aes(x=`V9. PAGO_AGUA`,y=Freq)) +
+  geom_bar(stat='identity',fill="#EE6363")+
+  labs(x = " ")
+
+```
+
+### Cluster 3: Clase social por ingreso del hogar
+
+```{r}
+
+m1_economic_ingreso %>%
+  filter(cluster==3) %>%
+  ggplot(aes(x=ClaseSocial,y=Freq))+
+  geom_bar(stat='identity',fill="#EE6363")+
+  labs(x = " ")
+
+```

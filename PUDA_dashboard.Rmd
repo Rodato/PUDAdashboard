@@ -17,7 +17,7 @@ load("clustersData.RData")
 ```
 
 
-Distribución Económica
+Distribución Variables económicas
 =======================================================================
 Sidebar {.sidebar}
 -----------------------------------------------------------------------
@@ -52,11 +52,9 @@ m_economic_ingreso_r <- reactive({mEcon %>% filter(modulo==input$modulo_) %>% gr
 
 renderPlotly({
   
-  m_economic_contribucion<-m_economic_contribucion_r()
-  
   ggplotly(
     
-    m_economic_contribucion %>%
+    m_economic_contribucion_r() %>%
     filter(cluster==1) %>%
     ggplot(aes(x=`V9. PAGO_AGUA`,y=Freq))+
     geom_bar(stat='identity',fill="#7AC5CD")+
@@ -101,11 +99,10 @@ Column {data-width=450}
 
 renderPlotly({
   
-  m_economic_contribucion<-m_economic_contribucion_r()
   
   ggplotly(
     
-    m_economic_contribucion %>%
+    m_economic_contribucion_r() %>%
     filter(cluster==2) %>%
     ggplot(aes(x=`V9. PAGO_AGUA`,y=Freq))+
     geom_bar(stat='identity',fill="#A2CD5A")+
@@ -151,11 +148,10 @@ Column {data-width=450}
 
 renderPlotly({
   
-  m_economic_contribucion<-m_economic_contribucion_r()
   
   ggplotly(
     
-    m_economic_contribucion %>%
+    m_economic_contribucion_r() %>%
     filter(cluster==3) %>%
     ggplot(aes(x=`V9. PAGO_AGUA`,y=Freq))+
     geom_bar(stat='identity',fill="#EE6363")+
@@ -188,6 +184,503 @@ renderPlotly({
   
 })
 
+
+
+```
+
+
+Distribución sociodemográficas 1
+=======================================================================
+Sidebar {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+selectInput(inputId = "moduloS",
+            label =  "Modulo",
+            choices = unique(mSoci$modulo),
+            #choices = c("Laundry","BodyWashing","Toilet Use","Hand Washing",
+            #            "Brushing Teeth","Dishwashing"),
+            selected = "Laundry")
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+```{r}
+##preparamos los datos
+
+m_sociodem_sexo_r <- reactive({mSoci %>% filter(modulo==input$moduloS) %>% group_by(cluster,`V1. SEXO`) %>% summarise(Freq=n())})
+
+
+m_sociodem_gEta_r <- reactive({mSoci %>% filter(modulo==input$moduloS) %>% group_by(cluster,GEtario) %>% summarise(Freq=n())})
+
+
+```
+
+### Cluster 1: Sexo
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+   m_sociodem_sexo_r() %>%
+      filter(cluster==1) %>%
+      ggplot(aes(x=`V1. SEXO`,y=Freq))+
+      geom_bar(stat='identity',fill="#7AC5CD")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+```
+
+### Cluster 1: Grupos Etarios
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_sociodem_gEta_r() %>%
+      filter(cluster==1) %>%
+      ggplot(aes(x=GEtario,y=Freq))+
+      geom_bar(stat='identity',fill="#7AC5CD")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Cluster 2: Sexo
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+   m_sociodem_sexo_r() %>%
+      filter(cluster==2) %>%
+      ggplot(aes(x=`V1. SEXO`,y=Freq))+
+      geom_bar(stat='identity',fill="#A2CD5A")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+```
+
+
+### Cluster 2: Grupos Etarios
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_sociodem_gEta_r() %>%
+      filter(cluster==2) %>%
+      ggplot(aes(x=GEtario,y=Freq))+
+      geom_bar(stat='identity',fill="#A2CD5A")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Cluster 3: Sexo
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+   m_sociodem_sexo_r() %>%
+      filter(cluster==3) %>%
+      ggplot(aes(x=`V1. SEXO`,y=Freq))+
+      geom_bar(stat='identity',fill="#EE6363")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+```
+
+### Cluster 3: Grupos Etarios
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_sociodem_gEta_r() %>%
+      filter(cluster==3) %>%
+      ggplot(aes(x=GEtario,y=Freq))+
+      geom_bar(stat='identity',fill="#EE6363")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+```
+
+Distribución sociodemográficas 2
+=======================================================================
+Sidebar {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+selectInput(inputId = "moduloS2",
+            label =  "Modulo",
+            choices = unique(mSoci$modulo),
+            #choices = c("Laundry","BodyWashing","Toilet Use","Hand Washing",
+            #            "Brushing Teeth","Dishwashing"),
+            selected = "Laundry")
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+```{r}
+##preparamos los datos
+
+m_sociodem_etn_r <- reactive({mSoci %>% filter(modulo==input$moduloS2) %>% group_by(cluster,`V4. ETN_RAC`) %>% summarise(Freq=n())})
+
+
+m_sociodem_nvlsc_r <- reactive({mSoci %>% filter(modulo==input$moduloS2) %>% group_by(cluster,`V5. NIV_ESCOL`) %>% summarise(Freq=n())})
+
+
+```
+
+### Cluster 1: Etnia
+
+```{r}
+
+renderPlotly({
+
+  
+  ggplotly(
+    
+    m_sociodem_etn_r() %>%
+      filter(cluster==1) %>%
+      ggplot(aes(x=`V4. ETN_RAC`,y=Freq))+
+      geom_bar(stat='identity',fill="#7AC5CD")+
+      labs(x = " ")
+    
+    )
+  
+})
+```
+
+### Cluster 1: Nivel Escolar
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_sociodem_nvlsc_r() %>%
+      filter(cluster==1) %>%
+      ggplot(aes(x=`V5. NIV_ESCOL`,y=Freq))+
+      geom_bar(stat='identity',fill="#7AC5CD")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Cluster 2: Etnia
+
+```{r}
+
+renderPlotly({
+
+  
+  ggplotly(
+    
+    m_sociodem_etn_r() %>%
+      filter(cluster==2) %>%
+      ggplot(aes(x=`V4. ETN_RAC`,y=Freq))+
+      geom_bar(stat='identity',fill="#A2CD5A")+
+      labs(x = " ")
+    
+    )
+  
+})
+
+
+```
+
+
+### Cluster 2: Nivel Escolar
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_sociodem_nvlsc_r() %>%
+      filter(cluster==2) %>%
+      ggplot(aes(x=`V5. NIV_ESCOL`,y=Freq))+
+      geom_bar(stat='identity',fill="#A2CD5A")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Cluster 3: Etnia
+
+```{r}
+
+renderPlotly({
+
+  
+  ggplotly(
+    
+    m_sociodem_etn_r() %>%
+      filter(cluster==3) %>%
+      ggplot(aes(x=`V4. ETN_RAC`,y=Freq))+
+      geom_bar(stat='identity',fill="#EE6363")+
+      labs(x = " ")
+    
+    )
+  
+})
+
+
+```
+
+### Cluster 3: Nivel escolar
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_sociodem_nvlsc_r() %>%
+      filter(cluster==3) %>%
+      ggplot(aes(x=`V5. NIV_ESCOL`,y=Freq))+
+      geom_bar(stat='identity',fill="#EE6363")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+```
+
+Distribución Psicológicas 1
+=======================================================================
+Sidebar {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+selectInput(inputId = "moduloP1",
+            label =  "Modulo",
+            choices = unique(mpsyc$modulo),
+            #choices = c("Laundry","BodyWashing","Toilet Use","Hand Washing",
+            #            "Brushing Teeth","Dishwashing"),
+            selected = "Laundry")
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+```{r}
+##preparamos los datos
+
+m_psyco_m3_r <- reactive({mpsyc %>% filter(modulo==input$moduloP1) %>% group_by(cluster,`V7. CONOC_M3`) %>% summarise(Freq=n())})
+
+
+m_psyco_prcp_r <- reactive({mpsyc %>% filter(modulo==input$moduloP1) %>% group_by(cluster,`V8. PERCEP_CANT`) %>% summarise(Freq=n())})
+
+
+```
+
+### Cluster 1: Conocimiento cantidad agua
+
+```{r}
+
+renderPlotly({
+
+  
+  ggplotly(
+    
+    m_psyco_m3_r() %>%
+      filter(cluster==1) %>%
+      ggplot(aes(x=`V7. CONOC_M3`,y=Freq))+
+      geom_bar(stat='identity',fill="#7AC5CD")+
+      labs(x = " ")
+    
+    )
+  
+})
+```
+
+### Cluster 1: Percepción cantidad agua
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_psyco_prcp_r() %>%
+      filter(cluster==1) %>%
+      ggplot(aes(x=`V8. PERCEP_CANT`,y=Freq))+
+      geom_bar(stat='identity',fill="#7AC5CD")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Cluster 2: Conocimiento cantidad agua
+
+```{r}
+
+renderPlotly({
+
+  
+  ggplotly(
+    
+    m_psyco_m3_r() %>%
+      filter(cluster==2) %>%
+      ggplot(aes(x=`V7. CONOC_M3`,y=Freq))+
+      geom_bar(stat='identity',fill="#A2CD5A")+
+      labs(x = " ")
+    
+    )
+  
+})
+
+
+```
+
+
+### Cluster 2: Percepción cantidad agua
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_psyco_prcp_r() %>%
+      filter(cluster==2) %>%
+      ggplot(aes(x=`V8. PERCEP_CANT`,y=Freq))+
+      geom_bar(stat='identity',fill="#A2CD5A")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Cluster 3: Conocimiento cantidad agua
+
+```{r}
+
+renderPlotly({
+
+  
+  ggplotly(
+    
+    m_psyco_m3_r() %>%
+      filter(cluster==3) %>%
+      ggplot(aes(x=`V7. CONOC_M3`,y=Freq))+
+      geom_bar(stat='identity',fill="#EE6363")+
+      labs(x = " ")
+    
+    )
+  
+})
+
+
+```
+
+### Cluster 3: Percepción cantidad agua
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_psyco_prcp_r() %>%
+      filter(cluster==3) %>%
+      ggplot(aes(x=`V8. PERCEP_CANT`,y=Freq))+
+      geom_bar(stat='identity',fill="#EE6363")+
+      labs(x = " ")
+    
+  )
+  
+})
 
 
 ```

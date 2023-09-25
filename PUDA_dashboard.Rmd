@@ -684,3 +684,335 @@ renderPlotly({
 
 
 ```
+
+Distribución Psicológicas 2
+=======================================================================
+Sidebar {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+selectInput(inputId = "moduloP2",
+            label =  "Modulo",
+            choices = unique(mpsyc$modulo),
+            #choices = c("Laundry","BodyWashing","Toilet Use","Hand Washing",
+            #            "Brushing Teeth","Dishwashing"),
+            selected = "Laundry")
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+```{r}
+##preparamos los datos
+
+m_psyco_m3_r <- reactive({mpsyc %>% filter(modulo==input$moduloP2) %>% group_by(cluster,`V12. VALOR_AGUA [Considera que podemos utilizar la cantidad de agua que podamos pagar]`) %>% summarise(Freq=n())})
+
+
+m_psyco_prcp_r <- reactive({mpsyc %>% filter(modulo==input$moduloP2) %>% group_by(cluster,`VALOR_AGUA [Considera que debemos restringirla para los ecosistemas]`) %>% summarise(Freq=n())})
+
+
+```
+
+### Cluster 1: Pagamos el agua que usamos
+
+```{r}
+
+renderPlotly({
+
+  
+  ggplotly(
+    
+    m_psyco_m3_r() %>%
+      filter(cluster==1) %>%
+      ggplot(aes(x=`V12. VALOR_AGUA [Considera que podemos utilizar la cantidad de agua que podamos pagar]`,y=Freq))+
+      geom_bar(stat='identity',fill="#7AC5CD")+
+      labs(x = " ")
+    
+    )
+  
+})
+```
+
+### Cluster 1: Restringir por ecosistemas
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_psyco_prcp_r() %>%
+      filter(cluster==1) %>%
+      ggplot(aes(x=`V12. VALOR_AGUA [Considera que debemos restringirla para los ecosistemas]`,y=Freq))+
+      geom_bar(stat='identity',fill="#7AC5CD")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Cluster 2: Pagamos el agua que usamos
+
+```{r}
+
+renderPlotly({
+
+  
+  ggplotly(
+    
+    m_psyco_m3_r() %>%
+      filter(cluster==2) %>%
+      ggplot(aes(x=`V12. VALOR_AGUA [Considera que podemos utilizar la cantidad de agua que podamos pagar]`,y=Freq))+
+      geom_bar(stat='identity',fill="#A2CD5A")+
+      labs(x = " ")
+    
+    )
+  
+})
+
+
+```
+
+
+### Cluster 2: Restringir por ecosistemas
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_psyco_prcp_r() %>%
+      filter(cluster==2) %>%
+      ggplot(aes(x=`V12. VALOR_AGUA [Considera que debemos restringirla para los ecosistemas]`,y=Freq))+
+      geom_bar(stat='identity',fill="#A2CD5A")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Cluster 3: Pagamos el agua que usamos
+
+```{r}
+
+renderPlotly({
+
+  
+  ggplotly(
+    
+    m_psyco_m3_r() %>%
+      filter(cluster==3) %>%
+      ggplot(aes(x=`V12. VALOR_AGUA [Considera que podemos utilizar la cantidad de agua que podamos pagar]`,y=Freq))+
+      geom_bar(stat='identity',fill="#EE6363")+
+      labs(x = " ")
+    
+    )
+  
+})
+
+
+```
+
+### Cluster 3: Restringir por ecosistemas
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_psyco_prcp_r() %>%
+      filter(cluster==3) %>%
+      ggplot(aes(x=`V12. VALOR_AGUA [Considera que debemos restringirla para los ecosistemas]`,y=Freq))+
+      geom_bar(stat='identity',fill="#EE6363")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+```
+
+Distribución Psicológicas 3
+=======================================================================
+Sidebar {.sidebar}
+-----------------------------------------------------------------------
+
+```{r}
+selectInput(inputId = "moduloP3",
+            label =  "Modulo",
+            choices = unique(mpsyc$modulo),
+            #choices = c("Laundry","BodyWashing","Toilet Use","Hand Washing",
+            #            "Brushing Teeth","Dishwashing"),
+            selected = "Laundry")
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+```{r}
+##preparamos los datos
+
+m_psyco_m3_r <- reactive({mpsyc %>% filter(modulo==input$moduloP3) %>% group_by(cluster,`VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`) %>% summarise(Freq=n())})
+
+
+m_psyco_prcp_r <- reactive({mpsyc %>% filter(modulo==input$moduloP3) %>% group_by(cluster,`V10. SEPARA_RES`) %>% summarise(Freq=n())})
+
+
+```
+
+### Cluster 1: Preservar para generaciones
+
+```{r}
+
+renderPlotly({
+
+  
+  ggplotly(
+    
+    m_psyco_m3_r() %>%
+      filter(cluster==1) %>%
+      ggplot(aes(x=`VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`,y=Freq))+
+      geom_bar(stat='identity',fill="#7AC5CD")+
+      labs(x = " ")
+    
+    )
+  
+})
+```
+
+### Cluster 1: Separa residuos
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_psyco_prcp_r() %>%
+      filter(cluster==1) %>%
+      ggplot(aes(x=`V10. SEPARA_RES`,y=Freq))+
+      geom_bar(stat='identity',fill="#7AC5CD")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Cluster 2: Preservar para generaciones
+
+```{r}
+
+renderPlotly({
+
+  
+  ggplotly(
+    
+    m_psyco_m3_r() %>%
+      filter(cluster==2) %>%
+      ggplot(aes(x=`VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`,y=Freq))+
+      geom_bar(stat='identity',fill="#A2CD5A")+
+      labs(x = " ")
+    
+    )
+  
+})
+
+
+```
+
+
+### Cluster 2: Separa residuos
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_psyco_prcp_r() %>%
+      filter(cluster==2) %>%
+      ggplot(aes(x=`V10. SEPARA_RES`,y=Freq))+
+      geom_bar(stat='identity',fill="#A2CD5A")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+
+```
+
+Column {data-width=450}
+-----------------------------------------------------------------------
+
+### Cluster 3: Preservar para generaciones
+
+```{r}
+
+renderPlotly({
+
+  
+  ggplotly(
+    
+    m_psyco_m3_r() %>%
+      filter(cluster==3) %>%
+      ggplot(aes(x=`VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`,y=Freq))+
+      geom_bar(stat='identity',fill="#EE6363")+
+      labs(x = " ")
+    
+    )
+  
+})
+
+
+```
+
+### Cluster 3: Separa residuos
+
+```{r}
+
+renderPlotly({
+  
+  ggplotly(
+    
+    m_psyco_prcp_r() %>%
+      filter(cluster==3) %>%
+      ggplot(aes(x=`V10. SEPARA_RES`,y=Freq))+
+      geom_bar(stat='identity',fill="#EE6363")+
+      labs(x = " ")
+    
+  )
+  
+})
+
+
+```

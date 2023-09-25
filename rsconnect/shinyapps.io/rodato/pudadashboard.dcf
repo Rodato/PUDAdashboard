@@ -1,0 +1,10 @@
+name: pudadashboard
+title:
+username: rodato
+account: rodato
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9980148
+bundleId: 7725088
+url: https://rodato.shinyapps.io/pudadashboard/
+version: 1

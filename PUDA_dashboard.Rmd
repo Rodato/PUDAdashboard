@@ -709,7 +709,7 @@ Column {data-width=450}
 m_psyco_m3_r <- reactive({mpsyc %>% filter(modulo==input$moduloP2) %>% group_by(cluster,`V12. VALOR_AGUA [Considera que podemos utilizar la cantidad de agua que podamos pagar]`) %>% summarise(Freq=n())})
 
 
-m_psyco_prcp_r <- reactive({mpsyc %>% filter(modulo==input$moduloP2) %>% group_by(cluster,`VALOR_AGUA [Considera que debemos restringirla para los ecosistemas]`) %>% summarise(Freq=n())})
+m_psyco_prcp_r <- reactive({mpsyc %>% filter(modulo==input$moduloP2) %>% group_by(cluster,`V12. VALOR_AGUA [Considera que debemos restringirla para los ecosistemas]`) %>% summarise(Freq=n())})
 
 
 ```
@@ -872,7 +872,7 @@ Column {data-width=450}
 ```{r}
 ##preparamos los datos
 
-m_psyco_m3_r <- reactive({mpsyc %>% filter(modulo==input$moduloP3) %>% group_by(cluster,`VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`) %>% summarise(Freq=n())})
+m_psyco_m3_r <- reactive({mpsyc %>% filter(modulo==input$moduloP3) %>% group_by(cluster,`V12. VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`) %>% summarise(Freq=n())})
 
 
 m_psyco_prcp_r <- reactive({mpsyc %>% filter(modulo==input$moduloP3) %>% group_by(cluster,`V10. SEPARA_RES`) %>% summarise(Freq=n())})
@@ -891,7 +891,7 @@ renderPlotly({
     
     m_psyco_m3_r() %>%
       filter(cluster==1) %>%
-      ggplot(aes(x=`VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`,y=Freq))+
+      ggplot(aes(x=`V12. VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`,y=Freq))+
       geom_bar(stat='identity',fill="#7AC5CD")+
       labs(x = " ")
     
@@ -937,7 +937,7 @@ renderPlotly({
     
     m_psyco_m3_r() %>%
       filter(cluster==2) %>%
-      ggplot(aes(x=`VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`,y=Freq))+
+      ggplot(aes(x=`V12. VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`,y=Freq))+
       geom_bar(stat='identity',fill="#A2CD5A")+
       labs(x = " ")
     
@@ -985,7 +985,7 @@ renderPlotly({
     
     m_psyco_m3_r() %>%
       filter(cluster==3) %>%
-      ggplot(aes(x=`VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`,y=Freq))+
+      ggplot(aes(x=`V12. VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`,y=Freq))+
       geom_bar(stat='identity',fill="#EE6363")+
       labs(x = " ")
     

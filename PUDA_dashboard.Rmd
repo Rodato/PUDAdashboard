@@ -17,7 +17,7 @@ load("clustersData.RData")
 ```
 
 
-Distribución Variables económicas
+Distribución económicas
 =======================================================================
 Sidebar {.sidebar}
 -----------------------------------------------------------------------
@@ -706,10 +706,10 @@ Column {data-width=450}
 ```{r}
 ##preparamos los datos
 
-m_psyco_m3_r <- reactive({mpsyc %>% filter(modulo==input$moduloP2) %>% group_by(cluster,`V12. VALOR_AGUA [Considera que podemos utilizar la cantidad de agua que podamos pagar]`) %>% summarise(Freq=n())})
+valor1_r <- reactive({mpsyc %>% filter(modulo==input$moduloP2) %>% group_by(cluster,`V12. VALOR_AGUA [Considera que podemos utilizar la cantidad de agua que podamos pagar]`) %>% summarise(Freq=n())})
 
 
-m_psyco_prcp_r <- reactive({mpsyc %>% filter(modulo==input$moduloP2) %>% group_by(cluster,`V12. VALOR_AGUA [Considera que debemos restringirla para los ecosistemas]`) %>% summarise(Freq=n())})
+valor2_r <- reactive({mpsyc %>% filter(modulo==input$moduloP2) %>% group_by(cluster,`V12. VALOR_AGUA [Considera que debemos restringirla para los ecosistemas]`) %>% summarise(Freq=n())})
 
 
 ```
@@ -723,7 +723,7 @@ renderPlotly({
   
   ggplotly(
     
-    m_psyco_m3_r() %>%
+    valor1_r() %>%
       filter(cluster==1) %>%
       ggplot(aes(x=`V12. VALOR_AGUA [Considera que podemos utilizar la cantidad de agua que podamos pagar]`,y=Freq))+
       geom_bar(stat='identity',fill="#7AC5CD")+
@@ -742,7 +742,7 @@ renderPlotly({
   
   ggplotly(
     
-    m_psyco_prcp_r() %>%
+    valor2_r() %>%
       filter(cluster==1) %>%
       ggplot(aes(x=`V12. VALOR_AGUA [Considera que debemos restringirla para los ecosistemas]`,y=Freq))+
       geom_bar(stat='identity',fill="#7AC5CD")+
@@ -769,7 +769,7 @@ renderPlotly({
   
   ggplotly(
     
-    m_psyco_m3_r() %>%
+    valor1_r() %>%
       filter(cluster==2) %>%
       ggplot(aes(x=`V12. VALOR_AGUA [Considera que podemos utilizar la cantidad de agua que podamos pagar]`,y=Freq))+
       geom_bar(stat='identity',fill="#A2CD5A")+
@@ -791,7 +791,7 @@ renderPlotly({
   
   ggplotly(
     
-    m_psyco_prcp_r() %>%
+    valor2_r() %>%
       filter(cluster==2) %>%
       ggplot(aes(x=`V12. VALOR_AGUA [Considera que debemos restringirla para los ecosistemas]`,y=Freq))+
       geom_bar(stat='identity',fill="#A2CD5A")+
@@ -817,7 +817,7 @@ renderPlotly({
   
   ggplotly(
     
-    m_psyco_m3_r() %>%
+    valor1_r() %>%
       filter(cluster==3) %>%
       ggplot(aes(x=`V12. VALOR_AGUA [Considera que podemos utilizar la cantidad de agua que podamos pagar]`,y=Freq))+
       geom_bar(stat='identity',fill="#EE6363")+
@@ -838,7 +838,7 @@ renderPlotly({
   
   ggplotly(
     
-    m_psyco_prcp_r() %>%
+    valor2_r() %>%
       filter(cluster==3) %>%
       ggplot(aes(x=`V12. VALOR_AGUA [Considera que debemos restringirla para los ecosistemas]`,y=Freq))+
       geom_bar(stat='identity',fill="#EE6363")+
@@ -872,10 +872,10 @@ Column {data-width=450}
 ```{r}
 ##preparamos los datos
 
-m_psyco_m3_r <- reactive({mpsyc %>% filter(modulo==input$moduloP3) %>% group_by(cluster,`V12. VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`) %>% summarise(Freq=n())})
+valor3_r <- reactive({mpsyc %>% filter(modulo==input$moduloP3) %>% group_by(cluster,`V12. VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`) %>% summarise(Freq=n())})
 
 
-m_psyco_prcp_r <- reactive({mpsyc %>% filter(modulo==input$moduloP3) %>% group_by(cluster,`V10. SEPARA_RES`) %>% summarise(Freq=n())})
+separa_r <- reactive({mpsyc %>% filter(modulo==input$moduloP3) %>% group_by(cluster,`V10. SEPARA_RES`) %>% summarise(Freq=n())})
 
 
 ```
@@ -889,7 +889,7 @@ renderPlotly({
   
   ggplotly(
     
-    m_psyco_m3_r() %>%
+    valor3_r() %>%
       filter(cluster==1) %>%
       ggplot(aes(x=`V12. VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`,y=Freq))+
       geom_bar(stat='identity',fill="#7AC5CD")+
@@ -908,7 +908,7 @@ renderPlotly({
   
   ggplotly(
     
-    m_psyco_prcp_r() %>%
+    separa_r() %>%
       filter(cluster==1) %>%
       ggplot(aes(x=`V10. SEPARA_RES`,y=Freq))+
       geom_bar(stat='identity',fill="#7AC5CD")+
@@ -935,7 +935,7 @@ renderPlotly({
   
   ggplotly(
     
-    m_psyco_m3_r() %>%
+    valor3_r() %>%
       filter(cluster==2) %>%
       ggplot(aes(x=`V12. VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`,y=Freq))+
       geom_bar(stat='identity',fill="#A2CD5A")+
@@ -957,7 +957,7 @@ renderPlotly({
   
   ggplotly(
     
-    m_psyco_prcp_r() %>%
+    separa_r() %>%
       filter(cluster==2) %>%
       ggplot(aes(x=`V10. SEPARA_RES`,y=Freq))+
       geom_bar(stat='identity',fill="#A2CD5A")+
@@ -983,7 +983,7 @@ renderPlotly({
   
   ggplotly(
     
-    m_psyco_m3_r() %>%
+    valor3_r() %>%
       filter(cluster==3) %>%
       ggplot(aes(x=`V12. VALOR_AGUA [Considera que debemos preservarla para futuras generaciones]`,y=Freq))+
       geom_bar(stat='identity',fill="#EE6363")+
@@ -1004,7 +1004,7 @@ renderPlotly({
   
   ggplotly(
     
-    m_psyco_prcp_r() %>%
+    separa_r() %>%
       filter(cluster==3) %>%
       ggplot(aes(x=`V10. SEPARA_RES`,y=Freq))+
       geom_bar(stat='identity',fill="#EE6363")+
